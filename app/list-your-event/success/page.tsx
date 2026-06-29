@@ -12,7 +12,7 @@ export default function EventSuccessPage() {
     <ResultPage
       emoji="🎉"
       title="Your event is in!"
-      body={`Thanks — your receipt is on its way from Stripe. Your event will appear in the ${SITE.publishDay} edition for the week of its date. Spotted a typo? Email ${SITE.enquiryEmail}.`}
+      body={`Thanks, your receipt is on its way from Stripe. Your event will appear in the ${SITE.publishDay} edition for the week of its date. Spotted a typo? Email ${SITE.enquiryEmail}.`}
       primary={{ label: "Back to home", href: "/" }}
     />
   );

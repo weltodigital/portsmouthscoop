@@ -114,7 +114,7 @@ export function SponsorBooking() {
         new Set((data.booked ?? []).map((b) => `${b.send_date}|${b.placement}`)),
       );
     } catch {
-      /* fail open — picker still works */
+      /* fail open; picker still works */
     }
   }, []);
 
@@ -191,7 +191,7 @@ export function SponsorBooking() {
     // Lazy-load the Supabase client so it stays out of the initial page bundle.
     const { getBrowserSupabase } = await import("@/lib/supabase/browser");
     const supabase = getBrowserSupabase();
-    if (!supabase) return null; // Storage not configured — proceed without it.
+    if (!supabase) return null; // Storage not configured; proceed without it.
     const ext = photoFile.name.split(".").pop()?.toLowerCase() || "jpg";
     const path = `${crypto.randomUUID()}.${ext}`;
     const { error } = await supabase.storage

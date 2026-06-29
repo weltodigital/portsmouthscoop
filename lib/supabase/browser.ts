@@ -1,6 +1,6 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
-// Browser Supabase client using the public anon key — used only to upload
+// Browser Supabase client using the public anon key, used only to upload
 // sponsor creative photos directly to Storage (keeps large files off our API
 // routes, which are capped at ~4.5MB on Vercel). Returns null if unconfigured.
 let cached: SupabaseClient | null = null;

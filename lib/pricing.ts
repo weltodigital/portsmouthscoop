@@ -1,5 +1,5 @@
 // Single source of truth for pricing, shared by client UI and server routes.
-// The server always recomputes amounts from these tables — never trust a
+// The server always recomputes amounts from these tables; never trust a
 // price sent from the browser.
 
 export type PlacementKey = "primary" | "feature" | "classified";

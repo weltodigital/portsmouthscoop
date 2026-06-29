@@ -137,7 +137,7 @@ export async function POST(request: Request) {
             currency: "gbp",
             unit_amount: amount,
             product_data: {
-              name: `Portsmouth Scoop — Event listing (${pack.label})`,
+              name: `Portsmouth Scoop · Event listing (${pack.label})`,
               description: `${events.length} event${events.length > 1 ? "s" : ""}`,
             },
           },

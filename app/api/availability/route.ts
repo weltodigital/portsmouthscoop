@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAdminSupabase } from "@/lib/supabase/admin";
 
-// Always fetch fresh — availability changes as people book.
+// Always fetch fresh; availability changes as people book.
 export const dynamic = "force-dynamic";
 
 /**

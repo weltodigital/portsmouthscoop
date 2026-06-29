@@ -30,7 +30,7 @@ function isFutureFriday(iso: string) {
  * Sponsor checkout:
  *  1. validate placement / pack / dates / creative
  *  2. draft a `bookings` row (status 'pending') + `booking_dates`
- *     — the unique (send_date, placement) constraint blocks double-booking
+ *     (the unique (send_date, placement) constraint blocks double-booking)
  *  3. create a Stripe Checkout session for the pack amount
  *  4. return the redirect URL
  */
@@ -151,7 +151,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error:
-            "Sorry — one of those Fridays was just booked for this placement. Pick another date.",
+            "Sorry, one of those Fridays was just booked for this placement. Pick another date.",
         },
         { status: 409 },
       );
@@ -187,7 +187,7 @@ export async function POST(request: Request) {
             currency: "gbp",
             unit_amount: amount,
             product_data: {
-              name: `Portsmouth Scoop — ${SPONSOR_PRICING[placementKey].name} (${packMeta.label})`,
+              name: `Portsmouth Scoop · ${SPONSOR_PRICING[placementKey].name} (${packMeta.label})`,
               description: `Fridays: ${niceDates}`,
             },
           },

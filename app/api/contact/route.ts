@@ -58,7 +58,7 @@ export async function POST(request: Request) {
 
   await notify(
     `New contact message from ${firstName.trim()}`,
-    `From: ${firstName.trim()} <${email.trim()}>\nPhone: ${phone?.trim() || "—"}\n\n${message?.trim() || "(no message)"}`,
+    `From: ${firstName.trim()} <${email.trim()}>\nPhone: ${phone?.trim() || "(none)"}\n\n${message?.trim() || "(no message)"}`,
   );
 
   return NextResponse.json({ ok: true });
