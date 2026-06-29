@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAdminSupabase } from "@/lib/supabase/admin";
 import { getStripe, siteUrl } from "@/lib/stripe";
-import { eventPackForCount, MAX_EVENTS } from "@/lib/pricing";
+import { eventTierForCount, eventAmountPence, MAX_EVENTS } from "@/lib/pricing";
 import { rateLimit, clientIp } from "@/lib/ratelimit";
 
 export const dynamic = "force-dynamic";
@@ -24,7 +24,7 @@ type IncomingEvent = {
  * Event listing checkout:
  *  1. validate details + events (1–10)
  *  2. insert `event_listings` (status 'pending') + child `events`
- *  3. create a Stripe Checkout session for the pack price (£5 / £20 / £35)
+ *  3. create a Stripe Checkout session for the per-event total (rate × count)
  *  4. return the redirect URL
  */
 export async function POST(request: Request) {
@@ -83,8 +83,8 @@ export async function POST(request: Request) {
     }
   }
 
-  const pack = eventPackForCount(events.length);
-  const amount = pack.price * 100;
+  const tier = eventTierForCount(events.length);
+  const amount = eventAmountPence(events.length);
 
   let supabase, stripe;
   try {
@@ -105,7 +105,7 @@ export async function POST(request: Request) {
       email: email.trim(),
       business: business?.trim() || null,
       discount_code: discount?.trim() || null,
-      pack: pack.key,
+      pack: tier.key,
       amount_pence: amount,
       status: "pending",
     })
@@ -151,7 +151,7 @@ export async function POST(request: Request) {
             currency: "gbp",
             unit_amount: amount,
             product_data: {
-              name: `Portsmouth Scoop · Event listing (${pack.label})`,
+              name: `Portsmouth Scoop · Event listing (${events.length} event${events.length > 1 ? "s" : ""})`,
               description: `${events.length} event${events.length > 1 ? "s" : ""}`,
             },
           },

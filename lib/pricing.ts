@@ -70,26 +70,38 @@ export function sponsorAmountPence(
 }
 
 // ---- Events --------------------------------------------------------------
+//
+// Per-event pricing: the rate per event drops as you list more.
+//   1 event       → £5.00 each
+//   2–5 events    → £4.00 each
+//   6–10 events   → £3.50 each
+// Total = rate for the tier your count falls in × number of events.
 
-export type EventPackKey = "single" | "five" | "ten";
+export type EventTierKey = "single" | "five" | "ten";
 
-export const EVENT_PACKS: {
-  key: EventPackKey;
+export const EVENT_TIERS: {
+  key: EventTierKey;
   label: string;
-  cap: number;
-  price: number;
-  per: string;
+  min: number;
+  max: number;
+  rate: number; // pounds per event
 }[] = [
-  { key: "single", label: "Single event", cap: 1, price: 5, per: "" },
-  { key: "five", label: "Up to 5 events", cap: 5, price: 20, per: "£4 per event" },
-  { key: "ten", label: "Up to 10 events", cap: 10, price: 35, per: "£3.50 per event" },
+  { key: "single", label: "Single event", min: 1, max: 1, rate: 5 },
+  { key: "five", label: "2–5 events", min: 2, max: 5, rate: 4 },
+  { key: "ten", label: "6–10 events", min: 6, max: 10, rate: 3.5 },
 ];
 
 export const MAX_EVENTS = 10;
 
-/** The pack whose cap covers `count` events. */
-export function eventPackForCount(count: number) {
+/** The tier whose range covers `count` events. */
+export function eventTierForCount(count: number) {
   return (
-    EVENT_PACKS.find((p) => p.cap >= count) ?? EVENT_PACKS[EVENT_PACKS.length - 1]
+    EVENT_TIERS.find((t) => count >= t.min && count <= t.max) ??
+    EVENT_TIERS[EVENT_TIERS.length - 1]
   );
+}
+
+/** Authoritative total for `count` events, in pence (rate × count). */
+export function eventAmountPence(count: number): number {
+  return Math.round(eventTierForCount(count).rate * count * 100);
 }

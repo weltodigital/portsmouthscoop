@@ -2,9 +2,16 @@
 
 import { useState } from "react";
 import { SITE, SUBSCRIBERS } from "@/lib/site";
-import { EVENT_PACKS as PACKS, MAX_EVENTS, eventPackForCount } from "@/lib/pricing";
+import {
+  EVENT_TIERS,
+  MAX_EVENTS,
+  eventTierForCount,
+  eventAmountPence,
+} from "@/lib/pricing";
 
-const gbp = (n: number) => "£" + n.toLocaleString("en-GB");
+// Show pence only when needed (e.g. £24.50), otherwise a clean £24.
+const gbp = (n: number) =>
+  "£" + (Number.isInteger(n) ? n.toLocaleString("en-GB") : n.toFixed(2));
 
 type EventRow = {
   name: string;
@@ -43,8 +50,8 @@ export function EventForm() {
   const [errorMsg, setErrorMsg] = useState("");
 
   const count = events.length;
-  const pack = eventPackForCount(count);
-  const price = pack.price;
+  const tier = eventTierForCount(count);
+  const price = eventAmountPence(count) / 100;
 
   function updateEvent(i: number, field: keyof EventRow, value: string) {
     setEvents((prev) =>
@@ -127,34 +134,31 @@ export function EventForm() {
 
       {/* Pricing tiles */}
       <div className="mt-10 grid gap-4 sm:grid-cols-3">
-        {PACKS.map((p) => {
-          const active = p.key === pack.key;
+        {EVENT_TIERS.map((t) => {
+          const active = t.key === tier.key;
           return (
             <div
-              key={p.key}
+              key={t.key}
               className={`rounded-xl border p-5 text-center transition-colors ${
-                active
-                  ? "border-brand bg-brand-soft"
-                  : "border-line bg-card"
+                active ? "border-brand bg-brand-soft" : "border-line bg-card"
               }`}
             >
               <div className="text-sm font-semibold text-ink-soft">
-                {p.label}
+                {t.label}
               </div>
-              <div className="mt-1 text-2xl font-extrabold">{gbp(p.price)}</div>
-              <div className="mt-1 min-h-[18px] text-xs font-semibold text-grass">
-                {p.per}
+              <div className="mt-1 text-2xl font-extrabold">{gbp(t.rate)}</div>
+              <div className="mt-1 text-xs font-semibold text-grass">
+                per event
               </div>
             </div>
           );
         })}
       </div>
       <p className="mt-3 text-center text-sm text-muted">
-        You pay once for the pack size that covers your events.{" "}
+        The more you list, the less each one costs.{" "}
         <span className="font-semibold text-ink">
-          {count} event{count > 1 ? "s" : ""} → {gbp(price)}
+          {count} event{count > 1 ? "s" : ""} × {gbp(tier.rate)} = {gbp(price)}
         </span>
-        .
       </p>
 
       <form
