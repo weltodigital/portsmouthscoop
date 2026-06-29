@@ -48,6 +48,12 @@ export function Footer() {
                 {item.label}
               </Link>
             ))}
+            <a
+              href="/sitemap.xml"
+              className="font-semibold text-ink-soft hover:text-brand"
+            >
+              Sitemap
+            </a>
           </div>
           <p>
             Sponsor enquiries:{" "}
