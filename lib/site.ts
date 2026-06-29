@@ -24,12 +24,11 @@ export const NAV = [
 export const SUBSCRIBERS = "3,119";
 
 // Legal / data-controller details for the Privacy Policy + Terms.
-// TODO: fill in COMPANY_NUMBER and REGISTERED_ADDRESS before launch.
 export const LEGAL = {
   controller: "Welto Limited",
   brand: "Portsmouth Scoop",
-  companyNumber: "[COMPANY NUMBER]",
-  registeredAddress: "[REGISTERED ADDRESS]",
+  companyNumber: "14630258",
+  registeredAddress: "167-169 Great Portland Street, London, England, W1W 5PF",
   contactEmail: "portsmouthscoop@weltodigital.com",
   governingLaw: "England and Wales",
   lastUpdated: "29 June 2026",

@@ -77,10 +77,6 @@ export default function TermsPage() {
         sent, the booking is non-refundable. This does not affect your statutory
         rights.
       </p>
-      <p className="text-sm text-muted">
-        [Review this refund policy and adjust it to match how you want to run
-        cancellations before launch.]
-      </p>
 
       <h2>Results</h2>
       <p>
