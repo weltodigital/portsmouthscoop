@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getAdminSupabase } from "@/lib/supabase/admin";
 import { getStripe, siteUrl } from "@/lib/stripe";
 import { eventPackForCount, MAX_EVENTS } from "@/lib/pricing";
+import { rateLimit, clientIp } from "@/lib/ratelimit";
 
 export const dynamic = "force-dynamic";
 
@@ -27,6 +28,13 @@ type IncomingEvent = {
  *  4. return the redirect URL
  */
 export async function POST(request: Request) {
+  if (!rateLimit(`events:${clientIp(request)}`, 5, 60_000)) {
+    return NextResponse.json(
+      { error: "Too many submissions. Please wait a minute and try again." },
+      { status: 429 },
+    );
+  }
+
   let body: unknown;
   try {
     body = await request.json();
@@ -34,13 +42,19 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const { name, email, business, discount, events } = (body ?? {}) as {
+  const { name, email, business, discount, events, website } = (body ?? {}) as {
     name?: string;
     email?: string;
     business?: string;
     discount?: string;
     events?: IncomingEvent[];
+    website?: string;
   };
+
+  // Honeypot: hidden field only bots fill.
+  if (website && website.trim()) {
+    return NextResponse.json({ error: "Submission rejected." }, { status: 400 });
+  }
 
   if (!name?.trim()) {
     return NextResponse.json({ error: "Your name is required." }, { status: 422 });
@@ -144,6 +158,7 @@ export async function POST(request: Request) {
         },
       ],
       metadata: { kind: "event", listing_id: listing.id },
+      expires_at: Math.floor(Date.now() / 1000) + 30 * 60,
       success_url: `${siteUrl()}/list-your-event/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl()}/list-your-event/cancelled`,
     });

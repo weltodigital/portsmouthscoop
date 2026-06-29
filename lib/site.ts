@@ -22,3 +22,20 @@ export const NAV = [
 
 // Subscriber count, kept in one place so copy stays consistent.
 export const SUBSCRIBERS = "3,119";
+
+// Legal / data-controller details for the Privacy Policy + Terms.
+// TODO: fill in COMPANY_NUMBER and REGISTERED_ADDRESS before launch.
+export const LEGAL = {
+  controller: "Welto Limited",
+  brand: "Portsmouth Scoop",
+  companyNumber: "[COMPANY NUMBER]",
+  registeredAddress: "[REGISTERED ADDRESS]",
+  contactEmail: "portsmouthscoop@weltodigital.com",
+  governingLaw: "England and Wales",
+  lastUpdated: "29 June 2026",
+} as const;
+
+export const LEGAL_NAV = [
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms", href: "/terms" },
+] as const;

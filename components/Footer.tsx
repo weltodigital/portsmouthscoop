@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { NAV, SITE } from "@/lib/site";
+import { NAV, LEGAL_NAV, SITE } from "@/lib/site";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -36,8 +36,19 @@ export function Footer() {
             </ul>
           </nav>
         </div>
-        <div className="mt-8 flex flex-col gap-1 border-t border-line pt-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>© {year} Portsmouth Scoop</p>
+        <div className="mt-8 flex flex-col gap-3 border-t border-line pt-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <p>© {year} Portsmouth Scoop</p>
+            {LEGAL_NAV.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="font-semibold text-ink-soft hover:text-brand"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
           <p>
             Sponsor enquiries:{" "}
             <a

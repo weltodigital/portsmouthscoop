@@ -160,6 +160,25 @@ public/       logo.png · homepage-hero.png
 
 ---
 
+## Security & compliance
+
+- **HTTP security headers** (HSTS, `X-Content-Type-Options`, `X-Frame-Options`,
+  `Referrer-Policy`, `Permissions-Policy`) are set in `next.config.mjs`; the
+  `X-Powered-By` header is disabled.
+- **Secrets** stay server-side; payments go through Stripe-hosted Checkout (cards
+  never touch our servers — SAQ A scope). The Stripe webhook verifies signatures.
+- **Database** has RLS enabled with no public policies; all writes go through
+  server routes using the service role.
+- **Anti-spam:** honeypot fields on the contact + event forms, plus best-effort
+  in-memory rate limiting on the POST routes (`lib/ratelimit.ts`). For strong,
+  global rate limiting at scale, swap in Upstash Redis (`@upstash/ratelimit`).
+- **Abandoned checkouts** expire after 30 minutes so held Fridays release quickly.
+- **Legal:** `/privacy` and `/terms` (linked in the footer) are UK-GDPR templates.
+  Before launch, fill the placeholders in `lib/site.ts` (`LEGAL.companyNumber`,
+  `LEGAL.registeredAddress`), review the refund policy in `app/terms/page.tsx`,
+  and have the pages checked by someone qualified — they're a starting point, not
+  legal advice.
+
 ## Notes
 
 - **Sponsor email:** `portsmouthscoop@weltodigital.com` (in `lib/site.ts`).

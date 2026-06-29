@@ -1,12 +1,20 @@
 import { NextResponse } from "next/server";
 import { getAdminSupabase } from "@/lib/supabase/admin";
 import { notify } from "@/lib/notify";
+import { rateLimit, clientIp } from "@/lib/ratelimit";
 
 /**
  * Contact form handler → inserts into Supabase `messages` (kind 'contact').
  * Optionally emails a notification via Resend if it's configured.
  */
 export async function POST(request: Request) {
+  if (!rateLimit(`contact:${clientIp(request)}`, 5, 60_000)) {
+    return NextResponse.json(
+      { error: "Too many messages. Please wait a minute and try again." },
+      { status: 429 },
+    );
+  }
+
   let body: unknown;
   try {
     body = await request.json();
@@ -14,10 +22,15 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const { firstName, email, phone, message } = (body ?? {}) as Record<
+  const { firstName, email, phone, message, website } = (body ?? {}) as Record<
     string,
     string
   >;
+
+  // Honeypot: real users never fill this hidden field; bots do.
+  if (website && website.trim()) {
+    return NextResponse.json({ ok: true });
+  }
 
   if (!firstName?.trim()) {
     return NextResponse.json(

@@ -37,6 +37,7 @@ export function EventForm() {
   const [business, setBusiness] = useState("");
   const [events, setEvents] = useState<EventRow[]>([emptyEvent()]);
   const [discount, setDiscount] = useState("");
+  const [website, setWebsite] = useState(""); // honeypot
   const [showDiscount, setShowDiscount] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
@@ -91,6 +92,7 @@ export function EventForm() {
           email: email.trim(),
           business: business.trim(),
           discount: discount.trim(),
+          website,
           events: events.map((ev) => ({
             ...ev,
             link: normaliseLink(ev.link),
@@ -160,6 +162,20 @@ export function EventForm() {
         noValidate
         className="mt-8 rounded-2xl border border-line bg-card p-6 shadow-[var(--shadow-soft)] sm:p-8"
       >
+        {/* Honeypot — hidden from people, catches bots. */}
+        <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+          <label htmlFor="website">Leave this field empty</label>
+          <input
+            id="website"
+            name="website"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+          />
+        </div>
+
         {/* Your details */}
         <h2 className="text-lg font-extrabold">Your details</h2>
         <div className="mt-4 grid gap-5 sm:grid-cols-2">

@@ -64,6 +64,35 @@ h3 {
   box-shadow: 0 0 0 3px var(--color-brand-soft);
 }
 
+/* Legal pages (privacy / terms) — simple readable prose. */
+.legal p,
+.legal ul {
+  margin-top: 1rem;
+  color: var(--color-ink-soft);
+  line-height: 1.7;
+}
+.legal h2 {
+  margin-top: 2rem;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+.legal ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+.legal li {
+  margin-top: 0.4rem;
+}
+.legal a {
+  color: var(--color-brand);
+  font-weight: 600;
+  text-decoration: underline;
+}
+.legal strong {
+  color: var(--color-ink);
+}
+
 /* Visible keyboard focus everywhere. */
 :focus-visible {
   outline: 3px solid var(--color-brand);

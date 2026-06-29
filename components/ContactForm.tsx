@@ -12,6 +12,7 @@ export function ContactForm() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
+  const [website, setWebsite] = useState(""); // honeypot
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -37,6 +38,7 @@ export function ContactForm() {
           email: email.trim(),
           phone: phone.trim(),
           message: message.trim(),
+          website,
         }),
       });
       if (!res.ok) throw new Error("Request failed");
@@ -70,6 +72,20 @@ export function ContactForm() {
       noValidate
       className="rounded-2xl border border-line bg-card p-6 shadow-[var(--shadow-soft)] sm:p-8"
     >
+      {/* Honeypot — hidden from people, catches bots. */}
+      <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+        <label htmlFor="website">Leave this field empty</label>
+        <input
+          id="website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
+        />
+      </div>
+
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="First name" required htmlFor="firstName">
           <input

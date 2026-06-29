@@ -7,8 +7,13 @@ import {
   sponsorAmountPence,
   type PlacementKey,
 } from "@/lib/pricing";
+import { rateLimit, clientIp } from "@/lib/ratelimit";
 
 export const dynamic = "force-dynamic";
+
+// Hold abandoned checkouts for 30 minutes, then Stripe expires the session and
+// the webhook releases the held Fridays. (Stripe minimum is 30 min.)
+const CHECKOUT_TTL_SECONDS = 30 * 60;
 
 function normaliseLink(url: string) {
   const u = (url || "").trim();
@@ -35,6 +40,13 @@ function isFutureFriday(iso: string) {
  *  4. return the redirect URL
  */
 export async function POST(request: Request) {
+  if (!rateLimit(`checkout:${clientIp(request)}`, 8, 60_000)) {
+    return NextResponse.json(
+      { error: "Too many attempts. Please wait a minute and try again." },
+      { status: 429 },
+    );
+  }
+
   let body: unknown;
   try {
     body = await request.json();
@@ -194,6 +206,7 @@ export async function POST(request: Request) {
         },
       ],
       metadata: { kind: "sponsor", booking_id: booking.id },
+      expires_at: Math.floor(Date.now() / 1000) + CHECKOUT_TTL_SECONDS,
       success_url: `${siteUrl()}/sponsor/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl()}/sponsor/cancelled?booking_id=${booking.id}`,
     });
