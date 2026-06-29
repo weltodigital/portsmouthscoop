@@ -1,0 +1,741 @@
+/* ============================================================
+   Portsmouth Scoop Sponsor / booking page styles.
+   Ported verbatim from portsmouth-scoop-sponsor.html, with the
+   brand blue changed to #003f94 (the logo wave colour).
+   Scoped under #ps-root so it never leaks into the rest of the app.
+   ============================================================ */
+#ps-root {
+  --ink: #102a43;
+  --ink-soft: #334e68;
+  --muted: #5a6b7b;
+  --line: #e3e8ee;
+  --bg: #f6f8fa;
+  --card: #ffffff;
+  --blue: #003f94;
+  --blue-soft: #eaf2fb;
+  --accent: #fecb06;
+  --accent-dark: #e6b800;
+  --green: #2f9e6b;
+  --green-soft: #e7f6ef;
+  --grey: #aeb8c2;
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(16, 42, 67, 0.05), 0 8px 24px rgba(16, 42, 67, 0.06);
+  --shadow-sm: 0 1px 2px rgba(16, 42, 67, 0.06);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+#ps-root * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+#ps-root .wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+#ps-root .seg {
+  padding: 48px 0;
+}
+#ps-root h1,
+#ps-root h2,
+#ps-root h3 {
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+#ps-root a {
+  color: var(--blue);
+  text-decoration: none;
+}
+#ps-root a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- header ---------- */
+#ps-root .hero {
+  background: var(--ink);
+  color: #fff;
+  padding: 56px 0 52px;
+}
+#ps-root .hero .wrap {
+  position: relative;
+}
+#ps-root .kicker {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #9fb3c8;
+  margin-bottom: 16px;
+}
+#ps-root .kicker .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+#ps-root .hero h1 {
+  font-size: clamp(34px, 5vw, 52px);
+  font-weight: 800;
+}
+#ps-root .hero p {
+  font-size: 18px;
+  color: #bcccdc;
+  margin-top: 14px;
+  max-width: 620px;
+}
+#ps-root .pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+#ps-root .pill {
+  font-size: 13px;
+  font-weight: 600;
+  color: #cfe0f0;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+/* ---------- stats ---------- */
+#ps-root .stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: -34px;
+  position: relative;
+  z-index: 2;
+}
+#ps-root .stat {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+  box-shadow: var(--shadow);
+}
+#ps-root .stat .label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+#ps-root .stat .num {
+  font-size: 34px;
+  font-weight: 800;
+  margin-top: 6px;
+  letter-spacing: -0.03em;
+}
+#ps-root .stat .sub {
+  font-size: 13px;
+  color: var(--green);
+  font-weight: 600;
+  margin-top: 4px;
+}
+#ps-root .stat .sub.plain {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* ---------- trusted / testimonials ---------- */
+#ps-root .placeholder-flag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-dark);
+  background: #fdeae3;
+  border: 1px solid #f8c9b9;
+  padding: 4px 9px;
+  border-radius: 6px;
+  margin-bottom: 14px;
+}
+#ps-root .trusted {
+  text-align: center;
+}
+#ps-root .trusted .head {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+#ps-root .logos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 26px;
+  justify-content: center;
+  align-items: center;
+}
+#ps-root .logo-chip {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  opacity: 0.75;
+}
+#ps-root .quotes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 30px;
+}
+#ps-root .quote {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+}
+#ps-root .quote .mark {
+  font-size: 34px;
+  line-height: 0;
+  color: var(--accent);
+  font-weight: 800;
+  display: block;
+  height: 18px;
+}
+#ps-root .quote p {
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin: 10px 0 14px;
+}
+#ps-root .quote .who {
+  font-size: 13px;
+  font-weight: 700;
+}
+#ps-root .quote .who span {
+  font-weight: 500;
+  color: var(--muted);
+}
+
+/* ---------- placements ---------- */
+#ps-root .sec-head {
+  text-align: center;
+  margin-bottom: 30px;
+}
+#ps-root .sec-head h2 {
+  font-size: 30px;
+  font-weight: 800;
+}
+#ps-root .sec-head p {
+  color: var(--muted);
+  margin-top: 8px;
+}
+#ps-root .cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+#ps-root .card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+#ps-root .card .tag {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+#ps-root .card .tname {
+  font-size: 20px;
+  font-weight: 800;
+}
+#ps-root .card .tpos {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 600;
+}
+#ps-root .card .blurb {
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin: 12px 0 14px;
+  min-height: 40px;
+}
+
+/* mini "where your ad sits" diagram */
+#ps-root .mini {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 116px;
+  margin: 0 auto 16px;
+  padding: 9px;
+  background: #fbfcfd;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+#ps-root .mini-slot {
+  background: #eef2f6;
+  border-radius: 6px;
+  padding: 7px;
+}
+#ps-root .mini-thumb {
+  height: 9px;
+  border-radius: 4px;
+  background: #d5dde6;
+  margin-bottom: 5px;
+}
+#ps-root .mini-line {
+  height: 4px;
+  border-radius: 999px;
+  background: #d5dde6;
+  margin-top: 4px;
+}
+#ps-root .mini-line.short {
+  width: 55%;
+}
+#ps-root .mini-slot.ad {
+  background: var(--blue-soft);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+#ps-root .mini-slot.ad .mini-thumb,
+#ps-root .mini-slot.ad .mini-line {
+  background: var(--accent);
+}
+#ps-root .mini-cap {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  text-align: center;
+  margin: -8px 0 14px;
+}
+#ps-root .card .avail {
+  font-size: 12.5px;
+  color: var(--green);
+  font-weight: 600;
+  background: var(--green-soft);
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 6px;
+  margin-bottom: 18px;
+}
+#ps-root .price-rows {
+  border-top: 1px solid var(--line);
+  margin-top: auto;
+}
+#ps-root .prow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+}
+#ps-root .prow .pl {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+#ps-root .prow .pl small {
+  display: block;
+  color: var(--green);
+  font-weight: 600;
+  font-size: 12px;
+}
+#ps-root .prow .pv {
+  font-size: 17px;
+  font-weight: 800;
+}
+#ps-root .card .book {
+  margin-top: 18px;
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+  background: var(--accent);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 700;
+  padding: 13px;
+  border-radius: 10px;
+  transition: background 0.15s;
+}
+#ps-root .card .book:hover {
+  background: var(--accent-dark);
+}
+#ps-root .card.is-feat .book {
+  background: var(--ink);
+  color: #fff;
+}
+#ps-root .card.is-feat .book:hover {
+  background: #000;
+}
+
+#ps-root .custom {
+  text-align: center;
+  background: var(--card);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-top: 22px;
+}
+#ps-root .custom b {
+  font-weight: 800;
+}
+
+/* ---------- booking ---------- */
+#ps-root .booking {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: var(--shadow);
+  scroll-margin-top: 20px;
+}
+#ps-root .bk-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+#ps-root .bk-head h2 {
+  font-size: 24px;
+  font-weight: 800;
+}
+#ps-root .bk-sub {
+  color: var(--muted);
+  font-size: 14px;
+}
+#ps-root .step-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin: 26px 0 10px;
+}
+#ps-root .packs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+#ps-root .pack {
+  border: 1.5px solid var(--line);
+  border-radius: 11px;
+  padding: 14px;
+  cursor: pointer;
+  text-align: center;
+  transition: 0.12s;
+  background: #fff;
+}
+#ps-root .pack:hover {
+  border-color: var(--blue);
+}
+#ps-root .pack.on {
+  border-color: var(--blue);
+  background: var(--blue-soft);
+}
+#ps-root .pack .pn {
+  font-size: 14px;
+  font-weight: 700;
+}
+#ps-root .pack .pp {
+  font-size: 15px;
+  font-weight: 800;
+  margin-top: 3px;
+}
+#ps-root .pack .ps {
+  font-size: 11.5px;
+  color: var(--green);
+  font-weight: 700;
+  margin-top: 2px;
+  min-height: 14px;
+}
+
+#ps-root .dates {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 8px;
+}
+#ps-root .date {
+  border: 1.5px solid var(--line);
+  border-radius: 9px;
+  padding: 9px 8px;
+  text-align: left;
+  cursor: pointer;
+  background: #fff;
+  transition: 0.1s;
+}
+#ps-root .date:hover:not(.booked) {
+  border-color: var(--blue);
+}
+#ps-root .date .dd {
+  font-size: 13.5px;
+  font-weight: 700;
+}
+#ps-root .date .ds {
+  font-size: 11.5px;
+  font-weight: 600;
+  margin-top: 2px;
+}
+#ps-root .date .ds.ok {
+  color: var(--green);
+}
+#ps-root .date.on {
+  border-color: var(--blue);
+  background: var(--blue-soft);
+}
+#ps-root .date.on .ds {
+  color: var(--blue);
+}
+#ps-root .date.booked {
+  background: #f3f5f7;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+#ps-root .date.booked .ds {
+  color: var(--grey);
+}
+#ps-root .pick-hint {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 8px 2px 0;
+}
+
+#ps-root .grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+#ps-root .field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+#ps-root .field .req {
+  color: var(--accent-dark);
+}
+#ps-root .field input,
+#ps-root .field textarea {
+  width: 100%;
+  border: 1.5px solid var(--line);
+  border-radius: 9px;
+  padding: 11px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--ink);
+  background: #fff;
+}
+#ps-root .field input:focus,
+#ps-root .field textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-soft);
+}
+#ps-root .field textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+#ps-root .field .count {
+  float: right;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+}
+#ps-root .field {
+  margin-bottom: 14px;
+}
+
+#ps-root .ai-btn {
+  border: 0;
+  cursor: pointer;
+  background: var(--blue);
+  color: #fff;
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 9px 14px;
+  border-radius: 8px;
+}
+#ps-root .ai-btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+#ps-root .photo-drop {
+  border: 1.5px dashed var(--line);
+  border-radius: 11px;
+  padding: 22px;
+  text-align: center;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 13.5px;
+  background: #fbfcfd;
+}
+#ps-root .photo-drop:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+#ps-root .photo-drop.has img {
+  max-height: 130px;
+  border-radius: 8px;
+}
+
+/* preview */
+#ps-root .preview-wrap {
+  margin-top: 8px;
+}
+#ps-root .preview-note {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+#ps-root .nl-block {
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  overflow: hidden;
+  background: #fff;
+}
+#ps-root .nl-block .nl-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 10px 16px 0;
+}
+#ps-root .nl-block .nl-img {
+  height: 150px;
+  background: #eef2f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--grey);
+  font-size: 13px;
+  margin: 10px 16px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+#ps-root .nl-block .nl-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#ps-root .nl-block .nl-h {
+  font-size: 18px;
+  font-weight: 800;
+  padding: 2px 16px;
+}
+#ps-root .nl-block .nl-b {
+  font-size: 14px;
+  color: var(--ink-soft);
+  padding: 6px 16px 4px;
+}
+#ps-root .nl-block .nl-cta {
+  color: var(--blue);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 6px 16px 16px;
+}
+
+/* review */
+#ps-root .review {
+  margin-top: 8px;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+}
+#ps-root .rev-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  padding: 7px 0;
+  color: var(--ink-soft);
+}
+#ps-root .rev-row b {
+  color: var(--ink);
+}
+#ps-root .rev-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 22px;
+  font-weight: 800;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  margin-top: 6px;
+}
+#ps-root .disc {
+  display: flex;
+  gap: 8px;
+  margin: 6px 0 16px;
+}
+#ps-root .disc input {
+  flex: 1;
+  border: 1.5px solid var(--line);
+  border-radius: 9px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: inherit;
+}
+#ps-root .pay {
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+  background: var(--accent);
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 800;
+  padding: 15px;
+  border-radius: 11px;
+}
+#ps-root .pay:hover {
+  background: var(--accent-dark);
+}
+#ps-root .pay:disabled {
+  background: var(--grey);
+  cursor: not-allowed;
+}
+#ps-root .assure {
+  list-style: none;
+  margin-top: 14px;
+}
+#ps-root .assure li {
+  font-size: 13px;
+  color: var(--ink-soft);
+  padding: 4px 0 4px 24px;
+  position: relative;
+}
+#ps-root .assure li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-weight: 800;
+}
+
+#ps-root .ft {
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 30px 0 50px;
+}
+
+@media (max-width: 760px) {
+  #ps-root .stats,
+  #ps-root .cards,
+  #ps-root .quotes,
+  #ps-root .packs {
+    grid-template-columns: 1fr;
+  }
+  #ps-root .grid2 {
+    grid-template-columns: 1fr;
+  }
+  #ps-root .stats {
+    margin-top: 24px;
+  }
+}

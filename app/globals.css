@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Portsmouth Scoop design system
+   Palette + type treatment lifted from the sponsor page :root,
+   with the brand blue set to #003f94 (the logo wave colour).
+   ============================================================ */
+@theme {
+  --color-ink: #102a43;
+  --color-ink-soft: #334e68;
+  --color-muted: #5a6b7b;
+  --color-line: #e3e8ee;
+  --color-cream: #f6f8fa;
+  --color-card: #ffffff;
+  --color-brand: #003f94;
+  --color-brand-soft: #eaf2fb;
+  --color-coral: #fecb06;
+  --color-coral-dark: #e6b800;
+  --color-grass: #2f9e6b;
+  --color-grass-soft: #e7f6ef;
+  --color-grey: #aeb8c2;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+
+  --shadow-card: 0 1px 2px rgba(16, 42, 67, 0.05), 0 8px 24px rgba(16, 42, 67, 0.06);
+  --shadow-soft: 0 1px 2px rgba(16, 42, 67, 0.06);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+/* Shared form input look (used by the contact form). */
+.ps-input {
+  width: 100%;
+  border: 1.5px solid var(--color-line);
+  border-radius: 9px;
+  padding: 11px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--color-ink);
+  background: #fff;
+}
+.ps-input:focus {
+  outline: none;
+  border-color: var(--color-brand);
+  box-shadow: 0 0 0 3px var(--color-brand-soft);
+}
+
+/* Visible keyboard focus everywhere. */
+:focus-visible {
+  outline: 3px solid var(--color-brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Respect users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

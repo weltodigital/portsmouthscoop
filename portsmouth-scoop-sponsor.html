@@ -1,0 +1,516 @@
+<!-- ============================================================
+     PORTSMOUTH SCOOP — Sponsor / booking page
+     A structural replica of the Bury Juice /sponsor page,
+     with Portsmouth Scoop pricing + branding.
+
+     EASY THINGS TO CHANGE:
+       • SEND_DAY  – which weekday you publish (0=Sun … 6=Sat). Default Thursday(4).
+       • PRICING   – per-placement prices (single / 4-pack / 12-pack).
+       • BOOKED    – array of 'YYYY-MM-DD' dates already taken (leave empty = all open).
+       • Brand colours live in :root.
+       • Testimonials + "Trusted by" are PLACEHOLDERS — replace or delete before launch.
+     ============================================================ -->
+<div id="ps-root">
+<style>
+  #ps-root{
+    --ink:#102A43;
+    --ink-soft:#334E68;
+    --muted:#5A6B7B;
+    --line:#E3E8EE;
+    --bg:#F6F8FA;
+    --card:#FFFFFF;
+    --blue:#2B6CB0;
+    --blue-soft:#EAF2FB;
+    --accent:#F0562F;
+    --accent-dark:#D8431D;
+    --green:#2F9E6B;
+    --green-soft:#E7F6EF;
+    --grey:#AEB8C2;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(16,42,67,.05),0 8px 24px rgba(16,42,67,.06);
+    --shadow-sm:0 1px 2px rgba(16,42,67,.06);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  #ps-root *{box-sizing:border-box;margin:0;padding:0}
+  #ps-root .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  #ps-root .seg{padding:48px 0}
+  #ps-root h1,#ps-root h2,#ps-root h3{line-height:1.15;letter-spacing:-.02em}
+  #ps-root a{color:var(--blue);text-decoration:none}
+  #ps-root a:hover{text-decoration:underline}
+
+  /* ---------- header ---------- */
+  #ps-root .hero{background:var(--ink);color:#fff;padding:56px 0 52px}
+  #ps-root .hero .wrap{position:relative}
+  #ps-root .kicker{display:inline-flex;gap:8px;align-items:center;font-size:13px;font-weight:600;
+    letter-spacing:.04em;text-transform:uppercase;color:#9FB3C8;margin-bottom:16px}
+  #ps-root .kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  #ps-root .hero h1{font-size:clamp(34px,5vw,52px);font-weight:800}
+  #ps-root .hero p{font-size:18px;color:#BCCCDC;margin-top:14px;max-width:620px}
+  #ps-root .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+  #ps-root .pill{font-size:13px;font-weight:600;color:#CFE0F0;background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.14);padding:6px 12px;border-radius:999px}
+
+  /* ---------- stats ---------- */
+  #ps-root .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:-34px;position:relative;z-index:2}
+  #ps-root .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 20px;box-shadow:var(--shadow)}
+  #ps-root .stat .label{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+  #ps-root .stat .num{font-size:34px;font-weight:800;margin-top:6px;letter-spacing:-.03em}
+  #ps-root .stat .sub{font-size:13px;color:var(--green);font-weight:600;margin-top:4px}
+  #ps-root .stat .sub.plain{color:var(--muted);font-weight:500}
+
+  /* ---------- trusted / testimonials ---------- */
+  #ps-root .placeholder-flag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--accent-dark);background:#FDEAE3;border:1px solid #F8C9B9;
+    padding:4px 9px;border-radius:6px;margin-bottom:14px}
+  #ps-root .trusted{text-align:center}
+  #ps-root .trusted .head{font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  #ps-root .logos{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:center;align-items:center}
+  #ps-root .logo-chip{font-size:15px;font-weight:700;color:var(--ink-soft);opacity:.75}
+  #ps-root .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+  #ps-root .quote{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-sm)}
+  #ps-root .quote .mark{font-size:34px;line-height:0;color:var(--accent);font-weight:800;display:block;height:18px}
+  #ps-root .quote p{font-size:14px;color:var(--ink-soft);margin:10px 0 14px}
+  #ps-root .quote .who{font-size:13px;font-weight:700}
+  #ps-root .quote .who span{font-weight:500;color:var(--muted)}
+
+  /* ---------- placements ---------- */
+  #ps-root .sec-head{text-align:center;margin-bottom:30px}
+  #ps-root .sec-head h2{font-size:30px;font-weight:800}
+  #ps-root .sec-head p{color:var(--muted);margin-top:8px}
+  #ps-root .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  #ps-root .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column}
+  #ps-root .card.is-feat{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue),var(--shadow)}
+  #ps-root .card .tag{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  #ps-root .card .tname{font-size:20px;font-weight:800}
+  #ps-root .card .tpos{font-size:13px;color:var(--muted);font-weight:600}
+  #ps-root .card .blurb{font-size:14px;color:var(--ink-soft);margin:12px 0 16px;min-height:40px}
+  #ps-root .card .avail{font-size:12.5px;color:var(--green);font-weight:600;background:var(--green-soft);
+    display:inline-block;padding:4px 9px;border-radius:6px;margin-bottom:18px}
+  #ps-root .price-rows{border-top:1px solid var(--line);margin-top:auto}
+  #ps-root .prow{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--line)}
+  #ps-root .prow .pl{font-size:14px;color:var(--ink-soft)}
+  #ps-root .prow .pl small{display:block;color:var(--green);font-weight:600;font-size:12px}
+  #ps-root .prow .pv{font-size:17px;font-weight:800}
+  #ps-root .card .book{margin-top:18px;width:100%;border:0;cursor:pointer;background:var(--accent);color:#fff;
+    font-size:15px;font-weight:700;padding:13px;border-radius:10px;transition:background .15s}
+  #ps-root .card .book:hover{background:var(--accent-dark)}
+  #ps-root .card.is-feat .book{background:var(--ink)}
+  #ps-root .card.is-feat .book:hover{background:#000}
+
+  #ps-root .custom{text-align:center;background:var(--card);border:1px dashed var(--line);
+    border-radius:var(--radius);padding:24px;margin-top:22px}
+  #ps-root .custom b{font-weight:800}
+
+  /* ---------- booking ---------- */
+  #ps-root .booking{background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:30px;box-shadow:var(--shadow);scroll-margin-top:20px}
+  #ps-root .bk-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+  #ps-root .bk-head h2{font-size:24px;font-weight:800}
+  #ps-root .bk-sub{color:var(--muted);font-size:14px}
+  #ps-root .step-label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--blue);margin:26px 0 10px}
+  #ps-root .packs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  #ps-root .pack{border:1.5px solid var(--line);border-radius:11px;padding:14px;cursor:pointer;text-align:center;transition:.12s;background:#fff}
+  #ps-root .pack:hover{border-color:var(--blue)}
+  #ps-root .pack.on{border-color:var(--blue);background:var(--blue-soft)}
+  #ps-root .pack .pn{font-size:14px;font-weight:700}
+  #ps-root .pack .pp{font-size:15px;font-weight:800;margin-top:3px}
+  #ps-root .pack .ps{font-size:11.5px;color:var(--green);font-weight:700;margin-top:2px;min-height:14px}
+
+  #ps-root .dates{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px}
+  #ps-root .date{border:1.5px solid var(--line);border-radius:9px;padding:9px 8px;text-align:left;cursor:pointer;background:#fff;transition:.1s}
+  #ps-root .date:hover:not(.booked){border-color:var(--blue)}
+  #ps-root .date .dd{font-size:13.5px;font-weight:700}
+  #ps-root .date .ds{font-size:11.5px;font-weight:600;margin-top:2px}
+  #ps-root .date .ds.ok{color:var(--green)}
+  #ps-root .date.on{border-color:var(--blue);background:var(--blue-soft)}
+  #ps-root .date.on .ds{color:var(--blue)}
+  #ps-root .date.booked{background:#F3F5F7;cursor:not-allowed;opacity:.7}
+  #ps-root .date.booked .ds{color:var(--grey)}
+  #ps-root .pick-hint{font-size:13px;color:var(--muted);margin:8px 2px 0}
+
+  #ps-root .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  #ps-root .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+  #ps-root .field .req{color:var(--accent-dark)}
+  #ps-root .field input,#ps-root .field textarea{width:100%;border:1.5px solid var(--line);border-radius:9px;
+    padding:11px 12px;font-size:14px;font-family:inherit;color:var(--ink);background:#fff}
+  #ps-root .field input:focus,#ps-root .field textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-soft)}
+  #ps-root .field textarea{resize:vertical;min-height:96px}
+  #ps-root .field .count{float:right;font-size:12px;color:var(--muted);font-weight:500}
+  #ps-root .field{margin-bottom:14px}
+
+  #ps-root .ai-box{background:var(--blue-soft);border:1px solid #CFE0F0;border-radius:11px;padding:14px;margin-bottom:14px}
+  #ps-root .ai-box .ai-t{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:7px}
+  #ps-root .ai-box .ai-d{font-size:12.5px;color:var(--ink-soft);margin:4px 0 10px}
+  #ps-root .ai-box input{width:100%;border:1.5px solid #CFE0F0;border-radius:8px;padding:9px 11px;font-size:13.5px;font-family:inherit;background:#fff;margin-bottom:9px}
+  #ps-root .ai-btn{border:0;cursor:pointer;background:var(--blue);color:#fff;font-weight:700;font-size:13.5px;padding:9px 14px;border-radius:8px}
+  #ps-root .ai-btn:disabled{opacity:.55;cursor:default}
+
+  #ps-root .photo-drop{border:1.5px dashed var(--line);border-radius:11px;padding:22px;text-align:center;cursor:pointer;color:var(--muted);font-size:13.5px;background:#FBFCFD}
+  #ps-root .photo-drop:hover{border-color:var(--blue);color:var(--blue)}
+  #ps-root .photo-drop.has img{max-height:130px;border-radius:8px}
+
+  /* preview */
+  #ps-root .preview-wrap{margin-top:8px}
+  #ps-root .preview-note{font-size:12px;color:var(--muted);margin-bottom:8px}
+  #ps-root .nl-block{border:1px solid var(--line);border-radius:11px;overflow:hidden;background:#fff}
+  #ps-root .nl-block .nl-tag{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--muted);padding:10px 16px 0}
+  #ps-root .nl-block .nl-img{height:150px;background:#EEF2F6;display:flex;align-items:center;justify-content:center;color:var(--grey);font-size:13px;margin:10px 16px;border-radius:8px;overflow:hidden}
+  #ps-root .nl-block .nl-img img{width:100%;height:100%;object-fit:cover}
+  #ps-root .nl-block .nl-h{font-size:18px;font-weight:800;padding:2px 16px}
+  #ps-root .nl-block .nl-b{font-size:14px;color:var(--ink-soft);padding:6px 16px 4px}
+  #ps-root .nl-block .nl-cta{color:var(--blue);font-weight:700;font-size:14px;padding:6px 16px 16px}
+
+  /* review */
+  #ps-root .review{margin-top:8px;border-top:1px solid var(--line);padding-top:22px}
+  #ps-root .rev-row{display:flex;justify-content:space-between;font-size:14px;padding:7px 0;color:var(--ink-soft)}
+  #ps-root .rev-row b{color:var(--ink)}
+  #ps-root .rev-total{display:flex;justify-content:space-between;font-size:22px;font-weight:800;padding:12px 0;border-top:1px solid var(--line);margin-top:6px}
+  #ps-root .disc{display:flex;gap:8px;margin:6px 0 16px}
+  #ps-root .disc input{flex:1;border:1.5px solid var(--line);border-radius:9px;padding:10px 12px;font-size:14px;font-family:inherit}
+  #ps-root .pay{width:100%;border:0;cursor:pointer;background:var(--accent);color:#fff;font-size:16px;font-weight:800;padding:15px;border-radius:11px}
+  #ps-root .pay:hover{background:var(--accent-dark)}
+  #ps-root .pay:disabled{background:var(--grey);cursor:not-allowed}
+  #ps-root .assure{list-style:none;margin-top:14px}
+  #ps-root .assure li{font-size:13px;color:var(--ink-soft);padding:4px 0 4px 24px;position:relative}
+  #ps-root .assure li:before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:800}
+
+  #ps-root .ft{text-align:center;color:var(--muted);font-size:13px;padding:30px 0 50px}
+
+  @media(max-width:760px){
+    #ps-root .stats,#ps-root .cards,#ps-root .quotes,#ps-root .packs{grid-template-columns:1fr}
+    #ps-root .grid2{grid-template-columns:1fr}
+    #ps-root .stats{margin-top:24px}
+  }
+</style>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker"><span class="dot"></span> Sponsor the Scoop</div>
+    <h1>Portsmouth Scoop</h1>
+    <p>The weekly newsletter for Portsmouth. Pick a placement, pick your Fridays, and be in the next issue.</p>
+    <div class="pills">
+      <span class="pill">Portsmouth</span>
+      <span class="pill">Weekly</span>
+      <span class="pill">100% local</span>
+    </div>
+  </div>
+</header>
+
+<!-- STATS -->
+<div class="wrap">
+  <div class="stats">
+    <div class="stat">
+      <div class="label">Subscribers</div>
+      <div class="num">3,119</div>
+      <div class="sub plain">Engaged Portsmouth locals</div>
+    </div>
+    <div class="stat">
+      <div class="label">Open rate</div>
+      <div class="num">50%</div>
+      <div class="sub">≈2× industry average</div>
+    </div>
+    <div class="stat">
+      <div class="label">Click-to-open</div>
+      <div class="num">9.9%</div>
+      <div class="sub plain">~1,570 opens every issue</div>
+    </div>
+  </div>
+</div>
+
+<!-- TRUSTED / TESTIMONIALS  (PLACEHOLDER — replace or delete before launch) -->
+<section class="seg">
+  <div class="wrap trusted">
+    <div class="placeholder-flag">Example content · replace once you have real sponsors</div>
+    <div class="head">Trusted by Portsmouth businesses</div>
+    <div class="logos">
+      <span class="logo-chip">Your Sponsor</span>
+      <span class="logo-chip">A Local Café</span>
+      <span class="logo-chip">An Independent Shop</span>
+      <span class="logo-chip">A Gym</span>
+      <span class="logo-chip">A Restaurant</span>
+    </div>
+    <div class="quotes">
+      <div class="quote">
+        <span class="mark">“</span>
+        <p>Placeholder testimonial. Swap this for a real quote from your first sponsor once you have one — short, specific, and about results.</p>
+        <div class="who">First Name <span>· Their Business</span></div>
+      </div>
+      <div class="quote">
+        <span class="mark">“</span>
+        <p>Placeholder testimonial. A line about how easy it was to book and how it felt to reach a local, engaged audience works well here.</p>
+        <div class="who">First Name <span>· Their Business</span></div>
+      </div>
+      <div class="quote">
+        <span class="mark">“</span>
+        <p>Placeholder testimonial. A reader quote — someone who loves the Scoop — is great social proof for sponsors too.</p>
+        <div class="who">First Name <span>· Subscriber</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLACEMENTS -->
+<section class="seg" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Pick a placement</h2>
+      <p>Three slots per issue. Book a single Thursday or save with a multi-issue pack.</p>
+    </div>
+    <div class="cards" id="cards"></div>
+    <div class="custom">
+      Looking for something custom? <b>Let’s talk</b> —
+      <a href="mailto:hello@portsmouthscoop.co.uk">hello@portsmouthscoop.co.uk</a>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="seg" style="padding-top:0">
+  <div class="wrap">
+    <div class="booking" id="booking">
+      <div class="bk-head">
+        <div>
+          <h2>Book your issues</h2>
+          <div class="bk-sub" id="bkPlacement">Primary placement · top of newsletter</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em">Running total</div>
+          <div style="font-size:26px;font-weight:800" id="runTotal">£75</div>
+        </div>
+      </div>
+
+      <div class="step-label">1 · How many?</div>
+      <div class="packs" id="packs"></div>
+
+      <div class="step-label">2 · Pick your <span id="pickN">1</span> Friday<span id="pickPlural"></span></div>
+      <div class="dates" id="dates"></div>
+      <div class="pick-hint" id="pickHint">Pick 1 Friday to continue.</div>
+
+      <div class="step-label">3 · Your creative</div>
+      <div class="preview-note">This is what Portsmouth Scoop readers will see on the day. You can change it up to 48h before send.</div>
+
+      <div class="ai-box">
+        <div class="ai-t">✨ Skip the blank page</div>
+        <div class="ai-d">Tell us what you’re promoting and we’ll draft a headline + body you can edit.</div>
+        <input id="aiPrompt" placeholder="e.g. summer sale on cold-pressed coffee, free tasting Saturdays">
+        <button class="ai-btn" id="aiBtn">Suggest with AI</button>
+      </div>
+
+      <div class="grid2">
+        <div class="field"><label>Business name <span class="req">*</span></label><input id="fBiz" placeholder="Required"></div>
+        <div class="field"><label>Contact email <span class="req">*</span></label><input id="fEmail" placeholder="you@business.co.uk"></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label>Contact phone <span class="req">*</span></label><input id="fPhone" placeholder="Required"></div>
+        <div class="field"><label>Link for the CTA <span class="req">*</span></label><input id="fLink" placeholder="yourbusiness.co.uk"></div>
+      </div>
+      <div class="field"><label>Headline <span class="count"><span id="cH">0</span>/60</span></label><input id="fHead" maxlength="60" placeholder="Required"></div>
+      <div class="field"><label>Body copy <span class="count"><span id="cB">0</span>/600</span></label><textarea id="fBody" maxlength="600" placeholder="A sentence or two for Portsmouth Scoop readers."></textarea></div>
+      <div class="field">
+        <label>Photo</label>
+        <div class="photo-drop" id="photoDrop">
+          <span id="photoTxt">Click to add a photo · JPEG or PNG · min 1200px wide · max 5&nbsp;MB</span>
+          <input type="file" id="fPhoto" accept="image/png,image/jpeg" hidden>
+        </div>
+      </div>
+
+      <div class="preview-wrap">
+        <div class="step-label" style="margin-top:8px">Preview</div>
+        <div class="preview-note">Rough — not a pixel-perfect newsletter render.</div>
+        <div class="nl-block">
+          <div class="nl-tag" id="pvTag">Primary</div>
+          <div class="nl-img" id="pvImg">Photo</div>
+          <div class="nl-h" id="pvHead">Your headline here</div>
+          <div class="nl-b" id="pvBody">Your copy goes here — a sentence or two for Portsmouth Scoop readers.</div>
+          <div class="nl-cta">Learn more →</div>
+        </div>
+      </div>
+
+      <div class="review">
+        <div class="step-label" style="margin-top:0">4 · Review &amp; pay</div>
+        <div class="rev-row"><span>Placement</span><b id="revPlace">Primary — top of newsletter</b></div>
+        <div class="rev-row"><span>Quantity</span><b id="revQty">Single issue</b></div>
+        <div class="rev-row"><span>Dates</span><b id="revDates">—</b></div>
+        <div class="rev-total"><span>Total</span><span id="revTotal">£75</span></div>
+        <div class="disc">
+          <input placeholder="Discount code (optional)">
+          <button class="ai-btn" style="background:var(--ink)">Apply</button>
+        </div>
+        <button class="pay" id="payBtn" disabled>Pick your dates to continue</button>
+        <ul class="assure">
+          <li>You’ll pop over to Stripe to pay, then come straight back.</li>
+          <li>Change your creative any time up to 48h before the issue sends.</li>
+          <li>Need to swap a date or ask something? Just reply to your receipt or email hello@portsmouthscoop.co.uk.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ft">Portsmouth Scoop · The weekly what’s-on for Portsmouth</div>
+
+<script>
+(function(){
+  // ---- CONFIG -------------------------------------------------
+  const SEND_DAY = 5;            // 0=Sun … 6=Sat. Friday = 5. CHANGE to your publish day.
+  const WEEKS_AHEAD = 26;        // how many upcoming issues to offer
+  const BOOKED = [];             // e.g. ['2026-07-09','2026-07-16'] — dates already taken
+  const PRICING = {
+    primary:    { name:'Primary',    pos:'top of newsletter',    blurb:'Logo + photo + copy at the very top — the full-attention slot.', single:75, four:270, twelve:720 },
+    feature:    { name:'Feature',    pos:'middle of newsletter', blurb:'Photo + copy placement in the middle of the issue.',           single:45, four:162, twelve:432 },
+    classified: { name:'Classified', pos:'bottom of newsletter', blurb:'A short content block near the bottom of the issue.',           single:20, four:72,  twelve:192 }
+  };
+  const PACKS = [
+    { key:'single', label:'Single issue', n:1,  field:'single', save:'' },
+    { key:'four',   label:'4-pack',       n:4,  field:'four',   save:'save 10%' },
+    { key:'twelve', label:'12-pack',      n:12, field:'twelve', save:'save 20%' }
+  ];
+  // -------------------------------------------------------------
+
+  const gbp = n => '£' + n.toLocaleString('en-GB');
+  const state = { place:'primary', pack:'single', dates:new Set() };
+
+  // upcoming send dates
+  const dates = [];
+  (function(){
+    const d = new Date(); d.setHours(0,0,0,0);
+    while(d.getDay()!==SEND_DAY) d.setDate(d.getDate()+1);
+    for(let i=0;i<WEEKS_AHEAD;i++){
+      const iso = d.toISOString().slice(0,10);
+      dates.push({ iso, label: d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}), booked: BOOKED.includes(iso) });
+      d.setDate(d.getDate()+7);
+    }
+  })();
+
+  const $ = id => document.getElementById(id);
+  const packN = () => PACKS.find(p=>p.key===state.pack).n;
+  const price = () => PRICING[state.place][PACKS.find(p=>p.key===state.pack).field];
+
+  // ---- placement cards ----
+  function renderCards(){
+    $('cards').innerHTML = Object.entries(PRICING).map(([k,p])=>`
+      <div class="card ${k==='feature'?'is-feat':''}" data-k="${k}">
+        <div class="tag"><span class="tname">${p.name}</span><span class="tpos">· ${p.pos}</span></div>
+        <div class="blurb">${p.blurb}</div>
+        <div class="avail">Next available: ${dates.find(d=>!d.booked).label}</div>
+        <div class="price-rows">
+          <div class="prow"><span class="pl">Single issue</span><span class="pv">${gbp(p.single)}</span></div>
+          <div class="prow"><span class="pl">4-pack <small>save 10%</small></span><span class="pv">${gbp(p.four)}</span></div>
+          <div class="prow"><span class="pl">12-pack <small>save 20%</small></span><span class="pv">${gbp(p.twelve)}</span></div>
+        </div>
+        <button class="book" data-k="${k}">Book ${p.name} · from ${gbp(p.single)}</button>
+      </div>`).join('');
+    $('cards').querySelectorAll('.book').forEach(b=>b.onclick=()=>{
+      state.place=b.dataset.k; state.dates.clear(); syncAll();
+      $('booking').scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  }
+
+  // ---- packs ----
+  function renderPacks(){
+    $('packs').innerHTML = PACKS.map(p=>`
+      <div class="pack ${p.key===state.pack?'on':''}" data-p="${p.key}">
+        <div class="pn">${p.label}</div>
+        <div class="pp">${gbp(PRICING[state.place][p.field])}</div>
+        <div class="ps">${p.save}</div>
+      </div>`).join('');
+    $('packs').querySelectorAll('.pack').forEach(el=>el.onclick=()=>{
+      state.pack=el.dataset.p;
+      if(state.dates.size>packN()) state.dates.clear();
+      syncAll();
+    });
+  }
+
+  // ---- dates ----
+  function renderDates(){
+    $('dates').innerHTML = dates.map(d=>{
+      const on = state.dates.has(d.iso);
+      return `<div class="date ${d.booked?'booked':''} ${on?'on':''}" data-d="${d.iso}">
+        <div class="dd">${d.label}</div>
+        <div class="ds ${d.booked?'':'ok'}">${d.booked?'Booked':(on?'Selected':'Available')}</div>
+      </div>`;
+    }).join('');
+    $('dates').querySelectorAll('.date:not(.booked)').forEach(el=>el.onclick=()=>{
+      const iso=el.dataset.d;
+      if(state.dates.has(iso)) state.dates.delete(iso);
+      else { if(state.dates.size>=packN()){ if(packN()===1) state.dates.clear(); else return; } state.dates.add(iso); }
+      syncAll();
+    });
+  }
+
+  // ---- sync summary / preview / pay ----
+  function syncAll(){
+    document.querySelectorAll('#cards .card').forEach(c=>c.style.outline = c.dataset.k===state.place?'2px solid var(--blue)':'none');
+    const p=PRICING[state.place], packLabel=PACKS.find(x=>x.key===state.pack).label, n=packN();
+    $('bkPlacement').textContent=`${p.name} placement · ${p.pos}`;
+    $('pickN').textContent=n; $('pickPlural').textContent=n>1?'s':'';
+    $('revPlace').textContent=`${p.name} — ${p.pos}`;
+    $('revQty').textContent=packLabel;
+    $('runTotal').textContent=gbp(price());
+    $('revTotal').textContent=gbp(price());
+    $('pvTag').textContent=p.name;
+
+    const picked=[...state.dates].sort();
+    $('revDates').textContent = picked.length? picked.map(iso=>dates.find(d=>d.iso===iso).label).join(', ') : '—';
+    const left=n-state.dates.size;
+    $('pickHint').textContent = left>0 ? `Pick ${left} more date${left>1?'s':''} to continue.` : `All ${n} dates picked ✓`;
+
+    const ready = state.dates.size===n;
+    const pay=$('payBtn');
+    pay.disabled=!ready;
+    pay.textContent = ready ? `Pay ${gbp(price())} with Stripe` : `Pick your ${n} date${n>1?'s':''} to continue`;
+    renderPacks(); renderDates();
+  }
+
+  // ---- creative live preview ----
+  function bindCreative(){
+    const h=$('fHead'),b=$('fBody');
+    h.oninput=()=>{ $('cH').textContent=h.value.length; $('pvHead').textContent=h.value||'Your headline here'; };
+    b.oninput=()=>{ $('cB').textContent=b.value.length; $('pvBody').textContent=b.value||'Your copy goes here — a sentence or two for Portsmouth Scoop readers.'; };
+    $('photoDrop').onclick=()=>$('fPhoto').click();
+    $('fPhoto').onchange=e=>{
+      const f=e.target.files[0]; if(!f) return;
+      const r=new FileReader();
+      r.onload=ev=>{ $('pvImg').innerHTML=`<img src="${ev.target.result}">`; $('photoTxt').textContent=f.name; $('photoDrop').classList.add('has'); };
+      r.readAsDataURL(f);
+    };
+  }
+
+  // ---- AI suggest (uses Anthropic API; degrades gracefully) ----
+  function bindAI(){
+    $('aiBtn').onclick=async()=>{
+      const biz=$('fBiz').value.trim(), what=$('aiPrompt').value.trim();
+      if(!biz){ alert('Add your business name first.'); return; }
+      const btn=$('aiBtn'); btn.disabled=true; const old=btn.textContent; btn.textContent='Drafting…';
+      try{
+        const res=await fetch('https://api.anthropic.com/v1/messages',{
+          method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({
+            model:'claude-sonnet-4-6',max_tokens:1000,
+            messages:[{role:'user',content:`Write a short newsletter sponsor block for a UK local what's-on newsletter (Portsmouth Scoop). Business: "${biz}". Promoting: "${what||'their business'}". Friendly, concrete, local. Respond with ONLY raw JSON, no markdown: {"headline":"max 55 chars","body":"2 sentences, max 280 chars"}`}]
+          })
+        });
+        const data=await res.json();
+        let txt=(data.content||[]).filter(x=>x.type==='text').map(x=>x.text).join('').replace(/```json|```/g,'').trim();
+        const j=JSON.parse(txt);
+        $('fHead').value=j.headline; $('fBody').value=j.body;
+        $('fHead').dispatchEvent(new Event('input')); $('fBody').dispatchEvent(new Event('input'));
+      }catch(err){
+        alert('Couldn’t draft just now — fill the headline and body in yourself, or try again.');
+      }finally{ btn.disabled=false; btn.textContent=old; }
+    };
+  }
+
+  renderCards(); bindCreative(); bindAI(); syncAll();
+})();
+</script>
+</div>
