@@ -5,7 +5,7 @@ export const SITE = {
   tagline: "Portsmouth News, With Personality.",
   description:
     "Your free weekly scoop on what's happening in and around Portsmouth: events, local gems, small biz spotlights & more.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://portsmouthscoop.co.uk",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.portsmouthscoop.co.uk",
   subscribeUrl: "https://portsmouthscoop.beehiiv.com/subscribe",
   // Custom enquiry / sponsor contact (per the build brief).
   enquiryEmail: "portsmouthscoop@weltodigital.com",
