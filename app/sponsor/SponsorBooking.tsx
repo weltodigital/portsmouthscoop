@@ -51,6 +51,9 @@ function buildDates(): IssueDate[] {
   const out: IssueDate[] = [];
   const d = new Date();
   d.setHours(0, 0, 0, 0);
+  // Start from tomorrow so the send day itself (today, if it's a Friday) drops
+  // off — the issue has already gone out and can no longer be booked.
+  d.setDate(d.getDate() + 1);
   while (d.getDay() !== SEND_DAY) d.setDate(d.getDate() + 1);
   for (let i = 0; i < WEEKS_AHEAD; i++) {
     // Build ISO from local parts (avoids the UTC day-shift toISOString can cause).
