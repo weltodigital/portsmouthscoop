@@ -14,7 +14,7 @@ export const SITE = {
 
 export const NAV = [
   { label: "Home", href: "/" },
-  { label: "Live Music Lineup", href: "/live-music-portsmouth" },
+  { label: "Live Music & Comedy", href: "/live-music-portsmouth" },
   { label: "Sponsor", href: "/sponsor" },
   { label: "List an Event", href: "/list-your-event" },
   { label: "Contact", href: "/contact" },
