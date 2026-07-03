@@ -103,9 +103,7 @@ const COMEDY: Day[] = [
   },
   {
     label: "Saturday 4 July",
-    gigs: [
-      { time: "8pm", act: "Puns and Roses", venue: "The Rose in June" },
-    ],
+    gigs: [{ time: "8pm", act: "Puns and Roses", venue: "The Rose in June" }],
   },
   {
     label: "Sunday 5 July",
@@ -119,6 +117,23 @@ const COMEDY: Day[] = [
   },
 ];
 
+/**
+ * Convert a listing time to minutes-since-midnight for sorting. Handles
+ * "8pm", "8.30pm", "11am" and ranges like "3pm–8pm" (sorts on the start).
+ * Anything unparseable sorts last.
+ */
+function toMinutes(time: string): number {
+  const start = time.split(/[–-]/)[0].trim();
+  const m = start.match(/^(\d{1,2})(?:[.:](\d{2}))?\s*(am|pm)$/i);
+  if (!m) return Number.MAX_SAFE_INTEGER;
+  let h = parseInt(m[1], 10);
+  const min = m[2] ? parseInt(m[2], 10) : 0;
+  const meridiem = m[3].toLowerCase();
+  if (meridiem === "pm" && h !== 12) h += 12;
+  if (meridiem === "am" && h === 12) h = 0;
+  return h * 60 + min;
+}
+
 /** A group of day cards (time · act @ venue), shared by music and comedy. */
 function DaySchedule({ days }: { days: Day[] }) {
   return (
@@ -130,22 +145,24 @@ function DaySchedule({ days }: { days: Day[] }) {
             {day.label}
           </h3>
           <ul className="mt-5 divide-y divide-line overflow-hidden rounded-2xl border border-line bg-card shadow-card">
-            {day.gigs.map((gig, i) => (
-              <li
-                key={`${gig.act}-${i}`}
-                className="flex items-baseline gap-4 px-5 py-4"
-              >
-                <span className="w-24 shrink-0 font-bold text-brand tabular-nums">
-                  {gig.time}
-                </span>
-                <span className="min-w-0">
-                  <span className="font-semibold text-ink">{gig.act}</span>
-                  {gig.venue && (
-                    <span className="text-ink-soft"> @ {gig.venue}</span>
-                  )}
-                </span>
-              </li>
-            ))}
+            {[...day.gigs]
+              .sort((a, b) => toMinutes(a.time) - toMinutes(b.time))
+              .map((gig, i) => (
+                <li
+                  key={`${gig.act}-${i}`}
+                  className="flex items-baseline gap-4 px-5 py-4"
+                >
+                  <span className="w-24 shrink-0 font-bold text-brand tabular-nums">
+                    {gig.time}
+                  </span>
+                  <span className="min-w-0">
+                    <span className="font-semibold text-ink">{gig.act}</span>
+                    {gig.venue && (
+                      <span className="text-ink-soft"> @ {gig.venue}</span>
+                    )}
+                  </span>
+                </li>
+              ))}
           </ul>
         </div>
       ))}
