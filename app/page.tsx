@@ -25,46 +25,40 @@ export default function HomePage() {
   return (
     <>
       {/* ---------- Hero ---------- */}
-      <section className="relative isolate overflow-hidden bg-ink text-white">
-        {/* Portsmouth harbour / Spinnaker Tower backdrop */}
-        <Image
-          src="/homepage-hero.png"
-          alt="Portsmouth harbour and the Spinnaker Tower"
-          fill
-          priority
-          sizes="100vw"
-          className="-z-10 object-cover object-center"
-        />
-        {/* Navy overlay keeps the text readable over the photo */}
-        <div
-          className="absolute inset-0 -z-10 bg-gradient-to-r from-ink/95 via-ink/85 to-ink/55"
-          aria-hidden="true"
-        />
-        <div className="mx-auto max-w-6xl px-5 py-24 md:py-32">
-          <div className="max-w-2xl">
-            <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#cfe0f0]">
+      <section className="bg-white">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 md:grid-cols-[minmax(0,1fr)_auto] md:py-24">
+          <div>
+            <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.08em] text-muted">
               <span className="h-1.5 w-1.5 rounded-full bg-coral" />
               Free weekly newsletter · Portsmouth
             </span>
-            <h1 className="mt-4 text-4xl font-extrabold leading-[1.1] tracking-tight drop-shadow-sm sm:text-5xl lg:text-6xl">
+            <h1 className="mt-4 text-4xl font-extrabold leading-[1.1] tracking-tight text-brand sm:text-5xl lg:text-6xl">
               Portsmouth News,
               <br />
               With Personality.
             </h1>
-            <p className="mt-5 max-w-xl text-lg text-[#dbe7f3]">
-              {SITE.description}
-            </p>
             <BeehiivForm
               formId={SITE.beehiivFormId}
-              className="mt-8"
+              className="mt-8 max-w-2xl"
               footnote={`Lands every ${SITE.publishDay}. No spam, unsubscribe anytime.`}
             />
             <Link
               href="/sponsor"
-              className="mt-6 inline-flex items-center justify-center rounded-xl border border-white/30 bg-white/5 px-6 py-3.5 text-base font-bold text-white backdrop-blur-sm transition-colors hover:bg-white/15"
+              className="mt-6 inline-flex items-center justify-center rounded-xl border border-line bg-white px-6 py-3.5 text-base font-bold text-ink transition-colors hover:border-brand hover:text-brand"
             >
               Sponsor the Scoop
             </Link>
+          </div>
+          {/* Portsmouth harbour / Spinnaker Tower, cropped to a circle */}
+          <div className="relative mx-auto aspect-square w-64 overflow-hidden rounded-full shadow-card sm:w-80 lg:w-96">
+            <Image
+              src="/homepage-hero.png"
+              alt="Portsmouth harbour and the Spinnaker Tower"
+              fill
+              priority
+              sizes="(min-width: 1024px) 24rem, (min-width: 640px) 20rem, 16rem"
+              className="object-cover object-center"
+            />
           </div>
         </div>
       </section>
@@ -98,17 +92,13 @@ export default function HomePage() {
 
       {/* ---------- Subscribe band ---------- */}
       <section className="px-5 pb-20">
-        <div className="mx-auto max-w-5xl rounded-3xl bg-brand px-6 py-12 text-center text-white md:py-16">
-          <h2 className="text-3xl font-extrabold tracking-tight">
+        <div className="mx-auto max-w-6xl rounded-3xl border border-line bg-white px-6 py-12 text-center shadow-card md:py-16">
+          <h2 className="text-3xl font-extrabold tracking-tight text-brand">
             Join 3,000+ Portsmouth locals
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-white/85">
-            It's free, it's friendly, and it's the easiest way to keep up with
-            the city. Get the next issue in your inbox this {SITE.publishDay}.
-          </p>
           <BeehiivForm
             formId={SITE.beehiivFormId}
-            className="mx-auto mt-7 max-w-xl"
+            className="mx-auto mt-7 max-w-3xl"
           />
         </div>
       </section>
