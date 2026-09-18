@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { BeehiivForm } from "@/components/BeehiivForm";
-import { SITE, SUBSCRIBERS } from "@/lib/site";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Subscribe",
@@ -11,27 +11,21 @@ export const metadata: Metadata = {
 
 export default function SubscribePage() {
   return (
-    <section className="mx-auto max-w-2xl px-5 py-16 md:py-20">
-      <div className="text-center">
+    <section className="bg-white">
+      <div className="mx-auto max-w-6xl px-5 py-16 text-center md:py-24">
         <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.08em] text-muted">
           <span className="h-1.5 w-1.5 rounded-full bg-coral" />
           Free weekly newsletter
         </span>
-        <h1 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
+        <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-brand sm:text-5xl">
           Get the Scoop
         </h1>
-        <p className="mx-auto mt-4 max-w-lg text-lg text-ink-soft">
-          Join {SUBSCRIBERS} Portsmouth locals. One friendly email every{" "}
-          {SITE.publishDay} with what&rsquo;s on, local gems and the independent
-          businesses worth knowing about.
-        </p>
+        <BeehiivForm
+          formId={SITE.beehiivFormId}
+          className="mx-auto mt-10 max-w-3xl"
+          footnote="No spam, unsubscribe anytime."
+        />
       </div>
-
-      <BeehiivForm
-        formId={SITE.beehiivFormId}
-        className="mx-auto mt-10"
-        footnote="No spam, unsubscribe anytime."
-      />
     </section>
   );
 }
