@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SubscribeButton } from "@/components/SubscribeButton";
+import { BeehiivForm } from "@/components/BeehiivForm";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Live Music & Comedy Lineup",
@@ -170,7 +171,10 @@ export default function LiveMusicPage() {
           Portsmouth this weekend. Subscribe to get the full lineup in your
           inbox first.
         </p>
-        <SubscribeButton className="mt-8 px-8 py-3.5 text-lg" />
+        <BeehiivForm
+          formId={SITE.beehiivFormId}
+          className="mx-auto mt-8 max-w-xl"
+        />
       </header>
 
       <div className="mt-16">

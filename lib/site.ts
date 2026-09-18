@@ -7,6 +7,8 @@ export const SITE = {
     "Your free weekly scoop on what's happening in and around Portsmouth: events, local gems, small biz spotlights & more.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.portsmouthscoop.co.uk",
   subscribeUrl: "https://portsmouthscoop.beehiiv.com/subscribe",
+  // beehiiv embedded subscribe form (data-beehiiv-form in the embed code).
+  beehiivFormId: "8d416772-1424-46ba-9289-aa4c11134d96",
   // Custom enquiry / sponsor contact (per the build brief).
   enquiryEmail: "portsmouthscoop@weltodigital.com",
   publishDay: "Friday",

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { SITE } from "@/lib/site";
-import { SubscribeButton } from "@/components/SubscribeButton";
+import { BeehiivForm } from "@/components/BeehiivForm";
 
 const PERKS = [
   {
@@ -54,18 +54,16 @@ export default function HomePage() {
             <p className="mt-5 max-w-xl text-lg text-[#dbe7f3]">
               {SITE.description}
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <SubscribeButton className="px-7 py-3.5 text-lg" />
-              <Link
-                href="/sponsor"
-                className="inline-flex items-center justify-center rounded-xl border border-white/30 bg-white/5 px-6 py-3.5 text-base font-bold text-white backdrop-blur-sm transition-colors hover:bg-white/15"
-              >
-                Sponsor the Scoop
-              </Link>
-            </div>
+            <BeehiivForm formId={SITE.beehiivFormId} className="mt-8" />
             <p className="mt-4 text-sm text-[#cfe0f0]">
               Lands every {SITE.publishDay}. No spam, unsubscribe anytime.
             </p>
+            <Link
+              href="/sponsor"
+              className="mt-6 inline-flex items-center justify-center rounded-xl border border-white/30 bg-white/5 px-6 py-3.5 text-base font-bold text-white backdrop-blur-sm transition-colors hover:bg-white/15"
+            >
+              Sponsor the Scoop
+            </Link>
           </div>
         </div>
       </section>
@@ -77,8 +75,8 @@ export default function HomePage() {
             What you get each {SITE.publishDay}
           </h2>
           <p className="mt-3 text-muted">
-            One friendly email. Everything worth knowing in Portsmouth this week,
-            nothing you don't.
+            One friendly email. Everything worth knowing in Portsmouth this
+            week, nothing you don't.
           </p>
         </div>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -104,10 +102,13 @@ export default function HomePage() {
             Join 3,000+ Portsmouth locals
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-white/85">
-            It's free, it's friendly, and it's the easiest way to keep up with the
-            city. Get the next issue in your inbox this {SITE.publishDay}.
+            It's free, it's friendly, and it's the easiest way to keep up with
+            the city. Get the next issue in your inbox this {SITE.publishDay}.
           </p>
-          <SubscribeButton variant="coral" className="mt-7 px-8 py-3.5 text-lg" />
+          <BeehiivForm
+            formId={SITE.beehiivFormId}
+            className="mx-auto mt-7 max-w-xl"
+          />
         </div>
       </section>
     </>
