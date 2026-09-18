@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 type Gig = {
-  time: string;
+  time?: string;
   act: string;
   venue?: string;
 };
@@ -21,63 +21,49 @@ type Day = {
 // The weekend's lineup. Update this each week.
 const LINEUP: Day[] = [
   {
-    label: "Friday 3 July",
+    label: "Friday 18 September",
     gigs: [
-      { time: "8.30pm", act: "Marley Blandford", venue: "Kassia" },
-      { time: "8pm", act: "Ricky Zalez", venue: "Sherlocks Bar" },
-      { time: "9pm", act: "Doghouse", venue: "The Admiral Drake" },
-      {
-        time: "7.30pm",
-        act: "Rich as Gary Barlow",
-        venue: "Casemates Studios & Cafe",
-      },
-      { time: "8pm", act: "Greg Barnes", venue: "Durty Nelly's" },
-      { time: "9pm", act: "Sweet and Soul", venue: "O'Neill's" },
-      { time: "9pm", act: "WHY?2K", venue: "The Vaults" },
+      { time: "8.30pm", act: "Harrison Rhys", venue: "Kassia" },
+      { time: "7.30pm", act: "Sabbra Cadabra", venue: "Portsmouth Guildhall" },
+      { time: "9pm", act: "Keith Simon", venue: "O'Neill's" },
+      { time: "8.45pm", act: "Patrick", venue: "The Bold Forester" },
+      { time: "9pm", act: "Beard", venue: "The Vaults" },
+      { time: "7pm", act: "A Night of Raw Metal", venue: "The Deco" },
     ],
   },
   {
-    label: "Saturday 4 July",
+    label: "Saturday 19 September",
     gigs: [
+      { time: "7.30pm", act: "INDIE 80'S", venue: "Wedgewood Rooms" },
+      { time: "8.30pm", act: "DJ Shakey (Vinyl)", venue: "Kassia" },
       {
-        time: "7pm",
-        act: "The Illegal Eagles",
+        time: "4pm",
+        act: "The Big Indoor Britpop Festival",
         venue: "Portsmouth Guildhall",
       },
-      { time: "11am", act: "HOMEGROWN SOUNDS", venue: "Wedgewood Rooms" },
-      {
-        time: "3pm–8pm",
-        act: "Brewery Grooves – Hipshaker vs Funk Club",
-        venue: "Staggeringly Good Brewery",
-      },
-      {
-        time: "7pm–11.30pm",
-        act: "What the Funk is Disco?",
-        venue: "Staggeringly Good Brewery",
-      },
-      {
-        time: "7.30pm",
-        act: "No Jacket Required – Both Sides of the Hits Tour",
-        venue: "Wedgewood Rooms",
-      },
-      { time: "1pm", act: "Live at the Bandstand" },
-      { time: "7.30pm", act: "The Monochrome Set", venue: "Kola" },
-      { time: "7pm", act: "80s Night", venue: "Mother Shipton" },
+      { time: "9pm", act: "Rhythm City", venue: "O'Neill's" },
+      { time: "9pm", act: "Rich as Gary Barlow", venue: "The Vaults" },
+      { time: "8pm", act: "The Soul Suspects", venue: "The Jolly Sailor" },
       { time: "8pm", act: "Roy Peplow", venue: "The Apsley" },
-      { time: "8pm", act: "Robbie McMinn", venue: "Durty Nelly's" },
-      { time: "9pm", act: "Queue the Audio", venue: "O'Neill's" },
-      { time: "5.30pm", act: "The Hill Brothers", venue: "The Jolly Sailor" },
     ],
   },
   {
-    label: "Sunday 5 July",
+    label: "Sunday 20 September",
     gigs: [
-      { time: "11am", act: "HOMEGROWN SOUNDS", venue: "Wedgewood Rooms" },
-      { time: "4pm", act: "Andy Osman", venue: "Sherlocks Bar" },
-      { time: "3pm", act: "Pf", venue: "The Derby Tavern" },
+      { time: "2pm", act: "THE GLORIAS", venue: "Wedgewood Rooms" },
+      {
+        time: "7.30pm",
+        act: "Carole King's Tapestry",
+        venue: "Portsmouth Guildhall",
+      },
+      {
+        time: "2.30pm",
+        act: "Joni Mitchell's Blue",
+        venue: "Portsmouth Guildhall",
+      },
       {
         time: "3pm",
-        act: "Jay Munday & Absuma",
+        act: "Rossco & Sam McCarthy",
         venue: "Casemates Studios & Cafe",
       },
       { time: "6pm", act: "Jazz Night", venue: "The Vaults" },
@@ -94,35 +80,30 @@ const LINEUP: Day[] = [
 // The weekend's comedy lineup. Update this each week.
 const COMEDY: Day[] = [
   {
-    label: "Friday 3 July",
-    gigs: [
-      { time: "7.30pm", act: "Wedge Comedy Club", venue: "Wedgewood Rooms" },
-      { time: "8pm", act: "Aubrey Blakeledge", venue: "The Fawcett Inn" },
-      { time: "8.15pm", act: "Comedy at The Tower", venue: "Spinnaker Tower" },
-    ],
+    label: "Friday 18 September",
+    gigs: [{ act: "Stitches Comedy Club", venue: "The Drayton Centre" }],
   },
   {
-    label: "Saturday 4 July",
-    gigs: [{ time: "8pm", act: "Puns and Roses", venue: "The Rose in June" }],
-  },
-  {
-    label: "Sunday 5 July",
+    label: "Saturday 19 September",
     gigs: [
       {
-        time: "7.30pm",
-        act: "Gary Delaney – Gary On Laughing",
-        venue: "New Theatre Royal",
+        act: "Comedy @ the Fort with Stephen K Amos, Andy Field & David Arnold",
       },
     ],
+  },
+  {
+    label: "Sunday 20 September",
+    gigs: [{ act: "Gary Meikle – YER MAW", venue: "The Gaiety, Southsea" }],
   },
 ];
 
 /**
  * Convert a listing time to minutes-since-midnight for sorting. Handles
  * "8pm", "8.30pm", "11am" and ranges like "3pm–8pm" (sorts on the start).
- * Anything unparseable sorts last.
+ * Anything unparseable (or missing) sorts last.
  */
-function toMinutes(time: string): number {
+function toMinutes(time?: string): number {
+  if (!time) return Number.MAX_SAFE_INTEGER;
   const start = time.split(/[–-]/)[0].trim();
   const m = start.match(/^(\d{1,2})(?:[.:](\d{2}))?\s*(am|pm)$/i);
   if (!m) return Number.MAX_SAFE_INTEGER;
@@ -152,9 +133,11 @@ function DaySchedule({ days }: { days: Day[] }) {
                   key={`${gig.act}-${i}`}
                   className="flex items-baseline gap-4 px-5 py-4"
                 >
-                  <span className="w-24 shrink-0 font-bold text-brand tabular-nums">
-                    {gig.time}
-                  </span>
+                  {gig.time && (
+                    <span className="w-24 shrink-0 font-bold text-brand tabular-nums">
+                      {gig.time}
+                    </span>
+                  )}
                   <span className="min-w-0">
                     <span className="font-semibold text-ink">{gig.act}</span>
                     {gig.venue && (
