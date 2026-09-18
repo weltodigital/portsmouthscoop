@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { SubscribeButton } from "@/components/SubscribeButton";
 
 export const metadata: Metadata = {
@@ -187,8 +188,14 @@ export default function LiveMusicPage() {
       </div>
 
       <p className="mt-14 text-center text-sm text-muted">
-        Got a gig we&rsquo;ve missed? Let us know and we&rsquo;ll add it to next
-        week&rsquo;s lineup.
+        Got a gig or comedy night coming up?{" "}
+        <Link
+          href="/list-your-event"
+          className="font-semibold text-brand hover:underline"
+        >
+          List your event
+        </Link>{" "}
+        and we&rsquo;ll feature it in the lineup.
       </p>
     </section>
   );
