@@ -27,11 +27,11 @@ export default function SubscribePage() {
         </p>
       </div>
 
-      <BeehiivForm formId={SITE.beehiivFormId} className="mx-auto mt-10" />
-
-      <p className="mt-8 text-center text-sm text-muted">
-        No spam, unsubscribe anytime.
-      </p>
+      <BeehiivForm
+        formId={SITE.beehiivFormId}
+        className="mx-auto mt-10"
+        footnote="No spam, unsubscribe anytime."
+      />
     </section>
   );
 }

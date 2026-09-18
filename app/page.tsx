@@ -54,10 +54,11 @@ export default function HomePage() {
             <p className="mt-5 max-w-xl text-lg text-[#dbe7f3]">
               {SITE.description}
             </p>
-            <BeehiivForm formId={SITE.beehiivFormId} className="mt-8" />
-            <p className="mt-4 text-sm text-[#cfe0f0]">
-              Lands every {SITE.publishDay}. No spam, unsubscribe anytime.
-            </p>
+            <BeehiivForm
+              formId={SITE.beehiivFormId}
+              className="mt-8"
+              footnote={`Lands every ${SITE.publishDay}. No spam, unsubscribe anytime.`}
+            />
             <Link
               href="/sponsor"
               className="mt-6 inline-flex items-center justify-center rounded-xl border border-white/30 bg-white/5 px-6 py-3.5 text-base font-bold text-white backdrop-blur-sm transition-colors hover:bg-white/15"
